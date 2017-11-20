@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <title>规则验证--大数据后台管理</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/css/font_eolqem241z66flxr.css" media="all"/>
+    <link rel="stylesheet" href="/css/news.css" media="all"/>
+</head>
+<body class="childrenBody">
+<div class="layui-container">
+    <div id="left" style="overflow:scroll;width: 20% ;height:785px;float:left;overflow-x: hidden; ">
+        <div class="layui-collapse" lay-accordion="">
+            <div class="layui-colla-item" th:each="rulerClass,rulerClassS:${rulerClasses}">
+                <h2 class="layui-colla-title" th:text="${rulerClass.key}" style="color: #04073d;font-size: larger"></h2>
+                <div class="layui-colla-content layui-show" th:each="eventName,eventNameS:${rulerClass.value}">
+                    <a href="javascript:void(0)" style="width: 100%;height: 100%" onclick="selectRuler.call(this)"
+                       th:text="${eventName.value}"></a>
+                    <span style="display: none" th:text="${eventName.key}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="right" style="width: 80% ;float:left;">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">正则表达式:</label>
+            <div class="layui-input-block">
+                <input type="text" name="condition" id="condition" required="" lay-verify="required"
+                       placeholder="请选择左侧规则" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">原始日志:</label>
+            <div class="layui-input-block">
+                <input type="text" name="rawevent" id="rawEvent" required="" lay-verify="required" placeholder="请输入原始日志"
+                       autocomplete="off"
+                       class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class=" layui-form-text" style="width: 50%;float: left">
+                <label class="layui-form-label">规则内容：</label>
+                <div class="layui-input-block">
+                    <textarea id="rulerContent" name="result" placeholder="规则内容" class="layui-textarea"
+                              style="height: 300px">
+
+                    </textarea>
+                </div>
+            </div>
+            <div class=" layui-form-text" style="width: 50%;float: left">
+                <label class="layui-form-label">translation：</label>
+                <div class="layui-input-block">
+                    <textarea id="translation" name="result" placeholder="规则中的translation" class="layui-textarea"
+                              style="height: 300px">
+
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class=" layui-form-text" style="width: 50%;float: left">
+                <label class="layui-form-label">解析结果：</label>
+                <div class="layui-input-block">
+                    <textarea id="result" name="result" placeholder="结果将在这里显示" disabled="disabled"
+                              class="layui-textarea" style="height: 300px">
+
+                    </textarea>
+                </div>
+            </div>
+            <div class="layui-form-text" style="width: 50%;float: left">
+                <label class="layui-form-label">正确结果：</label>
+                <div class="layui-input-block">
+                    <textarea id="rightResult" name="rightResult" placeholder="这里输入正确结果" class="layui-textarea"
+                              style="height: 300px"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <div style="float: left ;width: 400px">
+                    <button class="layui-btn layui-btn-disabled" disabled="disabled" lay-submit="" lay-filter="formDemo" id="analyseCommit"
+                            onclick="analyseCommit()">解析
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-danger" onclick="resetRulers()">重置</button>
+                </div>
+                <div id="mid_button" style="float: left;width: 663px">
+                    <span>将更改信息入库：</span>
+                    <button class="layui-btn layui-btn-small layui-btn-radius layui-btn-normal layui-btn-disabled" disabled="disabled"  lay-submit=""
+                            lay-filter="formDemo" onclick="regexSave()">正则入库
+                    </button>
+                    <button class="layui-btn layui-btn-small layui-btn-radius layui-btn-normal layui-btn-disabled" disabled="disabled"
+                            onclick="rulerContentSave()">规则内容入库
+                    </button>
+                    <button class="layui-btn layui-btn-small layui-btn-radius layui-btn-normal layui-btn-disabled" disabled="disabled"
+                            onclick="rulerTranslationSave()">translation入库
+                    </button>
+                    <button class="layui-btn layui-btn-small layui-btn-radius layui-btn-warm layui-btn-disabled" onclick="refreshRulers()">
+                        全部入库
+                    </button>
+                </div>
+                <div style="float: left">
+                    <span>导出数据：</span>
+                    <button class="layui-btn layui-btn-small" onclick="refreshRulers()">导出数据</button>
+                </div>
+
+            </div>
+        </div>
+
+
+        <script>
+            layui.use('element', function () {
+                var element = layui.element;
+
+                //…
+            });
+            //Demo
+            layui.use('form', function () {
+                var form = layui.form;
+
+                //监听提交
+                form.on('submit(formDemo)', function (data) {
+                    layer.msg(JSON.stringify(data.field));
+                    return false;
+                });
+            });
+        </script>
+    </div>
+</div>
+<div th:fragment="foot">
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/js/nav.js"></script>
+<script type="text/javascript" src="/js/leftNav.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/page/rulers/rulersValidate.js"></script>
+<script type="text/javascript" src="/js/bodyTab.js"></script>
+</div>
+</body>
+</html>

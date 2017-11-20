@@ -1,0 +1,41 @@
+[
+  {
+    "key": "up.",
+    "value": "1",
+    "eventName": "rgosswitch link_up",
+    "eventCategory": "NetWork",
+    "eventCategoryTechnique": "Link_Up"
+  },
+  {
+    "key": "ipoe_user_logon_success",
+    "eventName": "IPOE_USER_LOGON_SUCCESS",
+    "eventCategory": "Authentication",
+    "eventCategoryTechnique": "Login_Succeeded"
+  },{
+  "key": "ipoe_user_logon_failed",
+  "eventName": "IPOE_USER_LOGON_FAILED",
+  "eventCategory": "Authentication",
+  "eventCategoryTechnique": "Login_Failed"
+},{
+  "key": "ipoe_user_logoff",
+  "eventName": "IPOE_USER_LOGOFF",
+  "eventCategory": "Authentication",
+  "eventCategoryTechnique": "Logout"
+},{
+  "key": "stamgr_client_online",
+  "eventName": "STAMGR_CLIENT_ONLINE",
+  "eventCategory": "Wireless",
+  "eventCategoryTechnique": "Association"
+},{
+  "key": "stamgr_client_offline",
+  "eventName": "STAMGR_CLIENT_OFFLINE",
+  "eventCategory": "Wireless",
+  "eventCategoryTechnique": "Disassociation"
+},{
+  "key": "stamgr_roam_success",
+
+  "eventName": "STAMGR_ROAM_SUCCESS",
+  "eventCategory": "Wireless",
+  "eventCategoryTechnique": "Probe"
+}
+]

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="analyse/template :: header"/>
+
+<body class="childrenBody">
+<div id="left" style="width: 15% ;float:left; margin-right: 10px">
+    <div class="container form" style="overflow:scroll;width: 100% ;height:795px;overflow-x: hidden; ">
+        <div class="form-group">
+            <label for="time">时间：</label>
+            <input size="16" type="text"  readonly="" class="form-control form_datetime" id="time"/>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-6 control-label">总数量：</label>
+            <div class="col-sm-6">
+                <p class="form-control-static" id="total"></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="entid">企业：</label>
+            <select name="entid" class="col-sm-10 form-control" id="entid">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[0]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cusid">资产：</label>
+            <select name="entid" class="form-control" id="cusid">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[1]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cate">大类：</label>
+            <select name="entid" class="form-control" id="cate">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[2]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="subcate">子类：</label>
+            <select name="entid" class="form-control" id="subcate">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[3]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="level">级别：</label>
+            <select name="entid" class="form-control" id="level">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[4]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="device">设备：</label>
+            <select name="entid" class="form-control" id="device">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[5]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <!-- 按钮触发模态框 -->
+        <button class="btn btn-primary" data-remote="/analyse/logs.html" data-toggle="modal" data-backdrop="static" data-target="#myModal">查看日志信息</button>
+    </div>
+
+</div>
+<div id="right" style="width: 84% ;float:left; ">
+    <div class="container" style="overflow:scroll;width: 100% ;overflow-x: hidden; height:795px;">
+        <div id="entid-chart" style="height:600px;"></div>
+        <div id="cusid-chart" style="height:600px;"></div>
+        <div id="cate-chart" style="height:600px;"></div>
+        <div id="subcate-chart" style="height:600px;"></div>
+        <div id="level-chart" style="height:600px;"></div>
+        <div id="device-chart" style="height:600px;"></div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 100%">
+        <div class="modal-content" />
+    </div><!-- /.modal -->
+</div>
+
+
+<div th:replace="analyse/template :: foot"/>
+<script type="text/javascript" src="/page/analyse/resolve.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var statResults = [[${statResults}]];
+    var entid,cusid,cate,subcate,level,device,year,month,day;
+    var allEnts,allCuss,allCats,allSubs,allLevs,allDevs;
+    var time = [[${time}]];
+    year = time[0];
+    month=time[1];
+    day=time[2];
+    $("#time").val(year+'-'+month+'-'+day);
+    $(document).on('change', '#entid', function () {
+        entid = $(this).children('option:selected').val();
+
+        selectitem();
+
+    });
+    $(document).on('change', '#cusid', function () {
+        cusid = $(this).children('option:selected').val();
+        selectitem();
+    });
+    $(document).on('change', '#cate', function () {
+        cate = $(this).children('option:selected').val();
+        selectitem();
+    });
+    $(document).on('change', '#subcate', function () {
+        subcate = $(this).children('option:selected').val();
+        selectitem();
+    });
+    $(document).on('change', '#level', function () {
+        level = $(this).children('option:selected').val();
+        selectitem();
+    });
+
+    $(document).on('change', '#device', function () {
+        device = $(this).children('option:selected').val();
+        selectitem();
+    });
+
+    $(function () {
+        viewStats(statResults)
+    });
+
+//    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+
+    $(".form_datetime").datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        todayHighlight: true,
+        showMeridian: true,
+        pickerPosition: "bottom-right",
+        language: 'zh-CN',//中文，需要引用zh-CN.js包
+        startView: 2,//月视图
+        minView: 3//日期时间选择器所能够提供的最精确的时间选择视图
+    });
+
+    $('.form_datetime')
+        .datetimepicker()
+        .on('changeDate', function(ev){
+            var custTime = $('.form_datetime').val();
+            var times = custTime.split("-")
+            year=times[0];
+            month=times[1];
+            day=times[2];
+            selectitem();
+        });
+
+    /*]]>*/
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>add_Ruler</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <script type="text/javascript" src="/layui/layui.js"></script>
+</head>
+<body>
+<br/>
+<form class="layui-form" id="add-ruler-div" method="post" style="width: 555px;margin: auto">
+    <input type="hidden" name="id" th:value="${ruler}? ${ruler.id}"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">正则表达式</label>
+        <div class="layui-input-block">
+            <input th:value="${ruler}? ${ruler.regex}" id="regex" name="regex" required="" lay-verify="required" placeholder="请输入正则表达式" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">规则名称</label>
+        <div class="layui-input-block">
+            <input th:value="${ruler}? ${ruler.rulerName}" id="rulerName" name="rulerName" required="" lay-verify="required" placeholder="请输入规则名称" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属组名</label>
+        <div class="layui-input-block">
+            <select name="groupName" lay-verify="required" >
+                <option th:each="group,gS:${allGroups}" th:value="${group.groupName}" th:text="${group.groupName}"
+                th:selected="${ruler}? (${ruler.groupName == group.groupName}?'selected' )">
+                    <i style="display: none" th:text="${group.pluginCode}"></i>
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text" >
+        <label class="layui-form-label">规则内容</label>
+        <div class="layui-input-block" >
+            <textarea th:text="${ruler}? ${ruler.rulerContent}" name="rulerContent" placeholder="请输入json格式内容" class="layui-textarea" style="height: 350px"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否使用</label>
+        <div class="layui-input-block">
+            <input type="radio" name="status" value="2" title="使用"
+                   th:checked="${ruler}? (${ruler.status == 2}? 'checked') "/>
+            <input type="radio" name="status" value="1" title="不使用"
+                   th:checked="${ruler}? (${ruler.status == 1}? 'checked') "/>
+            <input type="radio" name="status" value="0" title="已删除"
+                   th:checked="${ruler}? (${ruler.status == 0}? 'checked') "/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="float: right">
+            <button class="layui-btn" lay-submit="" lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.use('form', function(){
+        var layer = parent.layer === undefined ? layui.layer : parent.layer,
+         form = layui.form(),
+        $ = layui.jquery;
+        form.on('submit(formDemo)', function(data){
+            $.ajax({
+                url:'/ruler',
+                data:$("#add-ruler-div").serialize(),
+                type:'POST',
+                success:function (data) {
+                    if(data.status==200){
+                        layer.msg("操作成功！");
+                        layer.closeAll("iframe");
+                    }else{
+                        layer.msg("操作失败！")
+                    }
+                },
+                error:function () {
+                    layer.msg("操作失败！")
+                }
+            });
+
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

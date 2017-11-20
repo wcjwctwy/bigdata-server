@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="analyse/template :: header"/>
+<script src="/js/echarts-all.js"></script>
+<body class="childrenBody">
+
+<div id="left" style="width: 15% ;float:left; margin-right: 10px">
+    <div class="container form" style="overflow:scroll;width: 100% ;height:795px;overflow-x: hidden; ">
+        <div class="form-group">
+            <label for="time">时间：</label>
+            <input size="16" type="text"  readonly="" class="form-control form_datetime" id="time"/>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-6 control-label">总数量：</label>
+            <div class="col-sm-6">
+                <p class="form-control-static" id="total"></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="entid">企业：</label>
+            <select name="entid" class="col-sm-10 form-control" id="entid">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[0]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cusid">资产：</label>
+            <select name="entid" class="form-control" id="cusid">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[1]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cate">大类：</label>
+            <select name="entid" class="form-control" id="cate">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[2]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="subcate">子类：</label>
+            <select name="entid" class="form-control" id="subcate">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[3]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="level">级别：</label>
+            <select name="entid" class="form-control" id="level">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[4]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="device">设备：</label>
+            <select name="entid" class="form-control" id="device">
+                <!--<option value="all">全部</option>-->
+                <!--<option th:each="ent,entS:${statResults[5]}" th:value="${ent.key}"-->
+                        <!--th:text="${ent.key} + '(' + ${ent.value} + ')'"></option>-->
+            </select>
+        </div>
+        <!-- 按钮触发模态框 -->
+        <button class="btn btn-primary" data-remote="/analyse/logs.html" data-toggle="modal" data-backdrop="static" data-target="#myModal">查看日志信息</button>
+    </div>
+
+</div>
+<div id="right" style="width: 84% ;float:left; ">
+    <div class="container" style="overflow:scroll;width: 100% ;overflow-x: hidden; height:795px;">
+        <div id="main" style="height:600px;"></div>
+
+    </div>
+</div>
+
+<div th:replace="analyse/template :: foot"/>
+<script type="text/javascript" src="/page/analyse/stats.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+var timeLineStatResultsByMonth = [[${timeLineStatResultsByMonth}]]
+
+    /*]]>*/
+
+
+</script>
+
+</body>
+</html>

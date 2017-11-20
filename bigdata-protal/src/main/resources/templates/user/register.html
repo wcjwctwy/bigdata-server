@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>add_Ruler</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <script type="text/javascript" src="/layui/layui.js"></script>
+</head>
+<body>
+<br/>
+<form class="layui-form layui-form-pane" id="add-ruler-div"  style="width: 555px;margin: auto">
+    <input type="hidden" name="id" th:value="${user}? ${user.id}"/>
+    <div class="layui-form-item" pane="">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+            <input th:value="${user}? ${user.username}" id="username" name="username" required="" lay-verify="required" placeholder="请输入用户名" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item" pane="">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input th:value="${user}? ${user.email}" id="email" name="email" required="" lay-verify="required" placeholder="请输入邮箱" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item" pane="">
+        <label class="layui-form-label">输入密码</label>
+        <div class="layui-input-inline">
+            <input th:value="${user}? ${user.password}" id="password" name="password" required="" lay-verify="required" placeholder="请输入密码" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">辅助文字</div>
+    </div>
+    <div class="layui-form-item" pane="">
+        <label class="layui-form-label">确认密码</label>
+        <div class="layui-input-inline">
+            <input th:value="${ruler}? ${ruler.rulerName}" id="reppwd" name="reppwd" required="" lay-verify="required" placeholder="两次密码要一致" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">辅助文字</div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="float: right">
+            <button class="layui-btn" lay-submit="" lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.use('form', function(){
+        var layer = parent.layer === undefined ? layui.layer : parent.layer,
+         form = layui.form(),
+        $ = layui.jquery;
+        form.on('submit(formDemo)', function(data){
+            $.ajax({
+                url:'/user',
+                data:$("#add-ruler-div").serialize(),
+                type:'POST',
+                success:function (data) {
+                    if(data.status==200){
+                        layer.msg("注册成功！");
+                        layer.closeAll("iframe");
+                    }else{
+                        layer.msg("注册失败！")
+                    }
+                },
+                error:function () {
+                    layer.msg("注册失败！")
+                }
+            });
+
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
