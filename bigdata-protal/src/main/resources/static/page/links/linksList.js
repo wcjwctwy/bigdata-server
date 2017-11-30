@@ -186,14 +186,11 @@ layui.config({
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
+			    	+'<td align="left">'+currData[i].platformName+'</td>'
 			    	+'<td align="left">'+currData[i].linksName+'</td>'
 			    	+'<td><a style="color:#1E9FFF;" target="_blank" href="'+currData[i].linksUrl+'">'+currData[i].linksUrl+'</a></td>'
-			    	+'<td>'+currData[i].masterEmail+'</td>'
-			    	+'<td>'+currData[i].linksTime+'</td>'
-			    	+'<td>'+currData[i].showAddress+'</td>'
 			    	+'<td>'
-					+  '<a class="layui-btn layui-btn-mini links_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
-					+  '<a class="layui-btn layui-btn-danger layui-btn-mini links_del" data-id="'+data[i].linksId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+					+  '<a class="layui-btn layui-btn " target="_blank" href="'+currData[i].linksUrl+'">点击进入</a>'
 			        +'</td>'
 			    	+'</tr>';
 				}

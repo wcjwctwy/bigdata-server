@@ -86,7 +86,7 @@ var navs = [
     {
         "title": "友情链接",
         "icon": "icon-text",
-        "href": "page/links/linksList.html",
+        "href": "/page/links/linksList.html",
         "spread": false
     },
     {

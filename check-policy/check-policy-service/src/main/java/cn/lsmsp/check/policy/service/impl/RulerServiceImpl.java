@@ -170,7 +170,15 @@ public class RulerServiceImpl implements RulerService {
         //读取需要压缩的文件
         String tempFilename = "/"+UUID.randomUUID().toString();
         File f = new File(exportXmlRulerPath);
+        File tempF = new File(RULER_TEMP_DOWNLOAD_PATH);
+        if(!tempF.exists()){
+            boolean mkdirs = tempF.mkdirs();
+            if(!mkdirs){
+                LOGGER.error("create path: "+RULER_TEMP_DOWNLOAD_PATH+" Failed!!");
+            }
+        }
         String targetFilePath = RULER_TEMP_DOWNLOAD_PATH + "/" + tempFilename;
+
         File target = new File(targetFilePath);
         CompressUtils.setTargetFile(target);
         CompressUtils.zipFiles(f);

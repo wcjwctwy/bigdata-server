@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
-    @PropertySource("file:/home/bdstat/config/resource-check.properties")
+    @PropertySource("classpath:/config/resource-check.properties")
 public class RulerCheckConfig {
 
     @Value("${RULER_PATH}")

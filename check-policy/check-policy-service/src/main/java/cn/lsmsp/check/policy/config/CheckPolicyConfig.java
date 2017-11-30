@@ -9,8 +9,8 @@ import org.springframework.context.annotation.PropertySources;
 import java.util.Properties;
 
 @Configuration
-@PropertySources({@PropertySource("file:/home/bdstat/config/contentdb.properties"),
-        @PropertySource("file:/home/bdstat/config/resource/resource-check.properties")})
+@PropertySources({@PropertySource("classpath:/config/contentdb.properties"),
+        @PropertySource("classpath:/config/resource/resource-check.properties")})
 public class CheckPolicyConfig {
     @Bean
     public PageHelper pageHelper() {
