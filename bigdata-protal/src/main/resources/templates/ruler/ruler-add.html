@@ -42,6 +42,13 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">优先级</label>
+        <div class="layui-input-block">
+            <input th:value="${ruler}? ${ruler.priority}" id="priority" name="priority" required="" lay-verify="required" placeholder="此规则的优先级1-10，数字越大优先级越低" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">是否使用</label>
         <div class="layui-input-block">
             <input type="radio" name="status" value="2" title="使用"

@@ -11,5 +11,6 @@ public interface SolrFacetService {
     FacetPage<LsEvent> getFacetByEntidAndCusidAndCates(String query);
     StatsPage<LsEvent> getStatsByEntidAndCusid();
     void save2Mysql(String year,String month,String day);
+    void save2Mysql(String year,String month,String day,String hour,String min);
 
 }

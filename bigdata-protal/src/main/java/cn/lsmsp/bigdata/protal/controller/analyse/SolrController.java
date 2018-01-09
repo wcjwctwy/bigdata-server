@@ -122,5 +122,12 @@ public class SolrController {
         return BigdataResult.ok();
     }
 
+    @RequestMapping("/import/{year}/{month}/{day}/{hour}/{min}")
+    @ResponseBody
+    public BigdataResult import2Mysql(@PathVariable String year,@PathVariable String month,@PathVariable String day,@PathVariable String hour,@PathVariable String min) {
+        solrFacetService.save2Mysql(year,month,day,hour,min);
+        return BigdataResult.ok();
+    }
+
 
 }

@@ -185,14 +185,16 @@ public class RulerUtils {
         pluginCode.addText(XmlRuler.getPluginCode().toString());
         //加载translation
         List<TranslationRuler> translations = XmlRuler.getTranslation();
-        addTranslation2Xml(root, translations);
+        if(translations!=null&&translations.size()>0) {
+            addTranslation2Xml(root, translations);
+        }
         //加载rule
         List<Ruler> rulers = XmlRuler.getRulers();
         rulers.forEach(r -> {
             addRuler2Xml(root, r);
         });
         //导出数据
-        saveDocumentToFile(document, filePath, fileName, false, "UTF-8");
+        saveDocumentToFile(document, filePath, fileName, true, "UTF-8");
 
     }
 
@@ -205,7 +207,8 @@ public class RulerUtils {
     public static void addRuler2Xml(Element root, Ruler ruler) {
         Element rule = root.addElement("rule");
         Element condition = rule.addElement("condition");
-        condition.addText("<![CDATA[" + ruler.getCondition() + "]]>");
+        condition.addCDATA(ruler.getCondition());
+//        condition.addText("<![CDATA[" + ruler.getCondition() + "]]>");
         Element content = rule.addElement("content");
         Map<String, String> rulerContent = ruler.getContent();
         addContent2Xml(content, rulerContent);
@@ -220,10 +223,17 @@ public class RulerUtils {
     public static void addContent2Xml(Element content, Map<String, String> rulerContent) {
         rulerContent.forEach((k, v) -> {
             if("EVENT_EXP".equals(k.toUpperCase())){
-                v="<![CDATA[" + v + "]]>";
+//                v="<![CDATA[" + v + "]]>";
+                content.addElement(StringUtils.upCaseFirst(k))
+                        .addCDATA(v);
+            }else {
+                try {
+                    content.addElement(StringUtils.upCaseFirst(k))
+                            .addText(v);
+                }catch (Exception e){
+                    LOGGER.info("========"+k);
+                }
             }
-            content.addElement(StringUtils.upCaseFirst(k))
-                    .addText(v);
         });
     }
 

@@ -1,6 +1,5 @@
 package cn.lsmsp.bigdata.protal.controller.ruler;
 
-import cn.lsmsp.bigdata.check.policy.config.RulerCheckConfig;
 import cn.lsmsp.bigdata.check.policy.dao.EventRulerTransDao;
 import cn.lsmsp.bigdata.check.policy.pojo.TbEventRule;
 import cn.lsmsp.bigdata.check.policy.pojo.TbEventRulerMain;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

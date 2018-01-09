@@ -162,7 +162,8 @@ function analyseCommit(){
                 }
                 $("#result").val(result)
             }else{
-                alert(data.msg)
+                $("#result").val(data.msg)
+                // alert(data.msg)
             }
 
         }
@@ -215,13 +216,13 @@ function rulerContentSave(){
         },
         success:function (data) {
             if(data.status==200){
-                alert("正则入库成功！");
+                alert("内容入库成功！");
             }else{
                 alert(data.msg);
             }
         },
         error:function () {
-            alert("正则入库失败！");
+            alert("内容入库失败！");
         }
     })
 }
@@ -237,13 +238,13 @@ function rulerTranslationSave(){
         },
         success:function (data) {
             if(data.status==200){
-                alert("正则入库成功！");
+                alert("translation入库成功！");
             }else{
                 alert(data.msg);
             }
         },
         error:function () {
-            alert("正则入库失败！");
+            alert("translation入库失败！");
         }
     })
 }

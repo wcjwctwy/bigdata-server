@@ -39,11 +39,11 @@
             <tr th:each="group,groupS:${allGroups}">
                 <td style="text-align: left">
                     <a  href="javascript:void(0)" class="selectGroup">
-                        <i style="display: none" th:text="'(' + ${group.id} + ')'"></i>
+                        <i style="display: none" th:text="'(' + ${group.pluginCode} + ')'"></i>
                         <span style="font-weight: bold;font-size: larger" th:text="${group.groupName}"></span>
 
                     </a>
-                    <span style="display: none" th:text="${group.pluginCode}"></span>
+                    <span style="display: none" th:text="${group.id}"></span>
                 </td>
             </tr>
             </tbody>

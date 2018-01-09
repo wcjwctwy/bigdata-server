@@ -96,31 +96,33 @@ public class RulerServiceImpl implements RulerService {
         Map<String, XmlRuler> stringRulerConfigMap = new HashMap<>();
         List<TbEventRulerMain> allRulers = eventRulerDao.getAllRulers();
         allRulers.forEach(r -> {
-            r = TbEventRulerCodeC.decode(r);
-            String key = r.getGroupName();
-            if (stringRulerConfigMap.containsKey(key)) {
-                //key在map中
-                XmlRuler rulerConfig = stringRulerConfigMap.get(key);
-                Ruler ruler = new Ruler();
-                ruler.setCondition(r.getRegex());
-                HashMap<String, String> hashMap = JsonUtils.jsonToPojo(r.getRulerContent(), HashMap.class);
-                ruler.setContent(hashMap);
-                ruler.setRulerId(r.getId());
-                rulerConfig.getRulers().add(ruler);
-            } else {
-                //key不在map中
-                XmlRuler rulerConfig = new XmlRuler();
-                stringRulerConfigMap.put(key, rulerConfig);
-                rulerConfig.setPluginCode(r.getPluginCode());
-                rulerConfig.setTranslation(eventRulerTransServiceIml.getEventRulerTrans(r.getPluginCode()));
-                List<Ruler> rulers = new ArrayList<>();
-                rulerConfig.setRulers(rulers);
-                Ruler ruler = new Ruler();
-                ruler.setCondition(r.getRegex());
-                HashMap<String, String> hashMap = JsonUtils.jsonToPojo(r.getRulerContent(), HashMap.class);
-                ruler.setContent(hashMap);
-                ruler.setRulerId(r.getId());
-                rulers.add(ruler);
+            if (r.getStatus() == 2) {
+                r = TbEventRulerCodeC.decode(r);
+                String key = r.getGroupName();
+                if (stringRulerConfigMap.containsKey(key)) {
+                    //key在map中
+                    XmlRuler rulerConfig = stringRulerConfigMap.get(key);
+                    Ruler ruler = new Ruler();
+                    ruler.setCondition(r.getRegex());
+                    HashMap<String, String> hashMap = JsonUtils.jsonToPojo(r.getRulerContent(), HashMap.class);
+                    ruler.setContent(hashMap);
+                    ruler.setRulerId(r.getId());
+                    rulerConfig.getRulers().add(ruler);
+                } else {
+                    //key不在map中
+                    XmlRuler rulerConfig = new XmlRuler();
+                    stringRulerConfigMap.put(key, rulerConfig);
+                    rulerConfig.setPluginCode(r.getPluginCode());
+                    rulerConfig.setTranslation(eventRulerTransServiceIml.getEventRulerTrans(r.getPluginCode()));
+                    List<Ruler> rulers = new ArrayList<>();
+                    rulerConfig.setRulers(rulers);
+                    Ruler ruler = new Ruler();
+                    ruler.setCondition(r.getRegex());
+                    HashMap<String, String> hashMap = JsonUtils.jsonToPojo(r.getRulerContent(), HashMap.class);
+                    ruler.setContent(hashMap);
+                    ruler.setRulerId(r.getId());
+                    rulers.add(ruler);
+                }
             }
         });
         return stringRulerConfigMap;
@@ -160,21 +162,22 @@ public class RulerServiceImpl implements RulerService {
 
     /**
      * 压缩文件
+     *
      * @param exportXmlRulerPath
-     * @param isDel 压缩完是否删除源文件
+     * @param isDel              压缩完是否删除源文件
      * @return
      */
     @Override
-    public String compressXmlFiles(String exportXmlRulerPath,boolean isDel) {
+    public String compressXmlFiles(String exportXmlRulerPath, boolean isDel) {
         //压缩xml文件夹
         //读取需要压缩的文件
-        String tempFilename = "/"+UUID.randomUUID().toString();
+        String tempFilename = "/" + UUID.randomUUID().toString();
         File f = new File(exportXmlRulerPath);
         File tempF = new File(RULER_TEMP_DOWNLOAD_PATH);
-        if(!tempF.exists()){
+        if (!tempF.exists()) {
             boolean mkdirs = tempF.mkdirs();
-            if(!mkdirs){
-                LOGGER.error("create path: "+RULER_TEMP_DOWNLOAD_PATH+" Failed!!");
+            if (!mkdirs) {
+                LOGGER.error("create path: " + RULER_TEMP_DOWNLOAD_PATH + " Failed!!");
             }
         }
         String targetFilePath = RULER_TEMP_DOWNLOAD_PATH + "/" + tempFilename;
@@ -182,9 +185,9 @@ public class RulerServiceImpl implements RulerService {
         File target = new File(targetFilePath);
         CompressUtils.setTargetFile(target);
         CompressUtils.zipFiles(f);
-        if(isDel){
+        if (isDel) {
             LOGGER.debug("delete exportXmlRulerPath");
-            Arrays.asList(f.listFiles()).forEach(file->f.delete());
+            Arrays.asList(f.listFiles()).forEach(file -> f.delete());
             f.delete();
         }
         return targetFilePath;
@@ -198,7 +201,7 @@ public class RulerServiceImpl implements RulerService {
         SqlCondition sqlCondition = new SqlCondition();
         sqlCondition.setObj(new TbRulerGroup());
         List<TbRulerGroup> groups = rulerGroupDao.getGroups(sqlCondition);
-        groups.forEach(g->rulerClass.put(g.getGroupName(), new HashMap<>()));
+        groups.forEach(g -> rulerClass.put(g.getGroupName(), new HashMap<>()));
         //查询规则
         List<TbEventRulerMain> allRulers = eventRulerDao.getAllRulers();
         allRulers.forEach((r) -> {
@@ -290,9 +293,9 @@ public class RulerServiceImpl implements RulerService {
     @Override
     public void saveOrUpdateRuler(TbEventRulerMain tbEventRuler) {
         Integer id = tbEventRuler.getId();
-        if(id!=null){
-            eventRulerDao.updateRuler(tbEventRuler,"id="+id) ;
-        }else{
+        if (id != null) {
+            eventRulerDao.updateRuler(tbEventRuler, "id=" + id);
+        } else {
             eventRulerDao.saveRuler(tbEventRuler);
         }
     }

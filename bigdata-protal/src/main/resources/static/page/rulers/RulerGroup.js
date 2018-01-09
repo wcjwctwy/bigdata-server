@@ -2,6 +2,7 @@ var sum = 0; //总数据量
 var nums = 17; //每页出现的数据量
 var page_sum = 0;
 var categoryId = "";
+var groupId="";
 
 layui.config({
     base: "js/"
@@ -15,13 +16,18 @@ layui.config({
     //*************************分组管理**********************************
     $(".add-group").click(function () {
         layer.open({
-            title: '在线调试'
-            ,content: ''
-            ,btn: ['按钮一', '按钮二', '按钮三']
-            ,yes: function(index, layero){
-                //按钮【按钮一】的回调
-                layer.close(index);
-            }
+            type: 2,
+            title: '添加规则'
+            , content: '/page/rulers/group.html',
+            area: ['600px', '720px']
+        });
+
+    });
+ $(".delete-group").click(function () {
+        layer.open({
+            title: '删除规则'
+            , content: '确定删除' + groupId + '这个组吗？',
+           //删除组
         });
 
     });
@@ -35,7 +41,7 @@ layui.config({
         var $this = $(this);
         $this.parent("td").addClass("active");
         $this.parents("tr").siblings("tr").children("td").removeClass("active");
-        // categoryId = $this.siblings("span").eq(0).text();
+        groupId = $this.siblings("span").eq(0).text();
         // getdata();
     });
 

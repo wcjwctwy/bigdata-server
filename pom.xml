@@ -12,6 +12,7 @@
         <module>bigdata-common</module>
         <module>user-auth</module>
         <module>bigdata-solr</module>
+        <module>bigdata-kafka</module>
     </modules>
 	<packaging>pom</packaging>
 

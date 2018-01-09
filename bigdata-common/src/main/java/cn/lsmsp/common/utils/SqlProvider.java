@@ -176,6 +176,25 @@ public class SqlProvider {
         return sql;
     }
 
+    public static String  update2(SqlCondition sqlCondition) throws Exception{
+        Map<String, String> describe = BeanUtils.describe(sqlCondition.getObj());
+        String[] classes = describe.get("class").split("\\.");
+        String className = classes[classes.length - 1];
+        String tableName = transClassNameTotableName(className).substring(1);
+        describe.remove("class");
+        StringBuilder tempSql = new StringBuilder();
+        describe.forEach((k,v)->{
+            if (v!=null){
+
+                //注意要加上'单引号
+                tempSql.append( ","+transClassNameTotableName(k)+"="+"'"+v+"'");
+            }
+        });
+        //去除第一个" and "
+        String sql = "update "+tableName+" set " + tempSql.substring(1)+" where "+sqlCondition.getWhere();
+        return sql;
+    }
+
     /**
      * 将字符串中的大写字母改成“_+小写”
      * @param className

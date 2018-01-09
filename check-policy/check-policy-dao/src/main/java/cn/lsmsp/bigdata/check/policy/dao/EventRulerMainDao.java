@@ -15,7 +15,7 @@ public interface EventRulerMainDao {
     @InsertProvider(type = EventRulerSqlProvider.class,method = "insert")
     void saveRuler(TbEventRulerMain tbEventRuler);
 
-    @Select("select * from tb_event_ruler_main order by plugin_code")
+    @Select("select * from tb_event_ruler_main order by plugin_code,priority")
     List<TbEventRulerMain> getAllRulers();
 
     @Select("select * from tb_event_ruler_main where id=#{id}")

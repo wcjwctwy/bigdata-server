@@ -11,4 +11,11 @@ public interface RulerGroupService {
 
     TbRulerGroup getGroupByGroupName(String groupName);
 
+    void addGroup(TbRulerGroup tbRulerGroup);
+
+    void delGroupById(Integer id);
+
+    void updateGroupById(TbRulerGroup tbRulerGroup);
+
+
 }

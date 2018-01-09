@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>add_Ruler</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <script type="text/javascript" src="/layui/layui.js"></script>
+</head>
+<body>
+<br/>
+<form class="layui-form" id="add-ruler-div" method="post" style="width: 555px;margin: auto">
+    <input type="hidden" name="id" th:value="${rulerGroup}? ${rulerGroup.id}"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">规则组名称:</label>
+        <div class="layui-input-block">
+            <input th:value="${rulerGroup}? ${rulerGroup.groupName}" id="groupName" name="groupName" required="" lay-verify="required" placeholder="请输入规则组名称（xml文件）" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">规则组ID:</label>
+        <div class="layui-input-block">
+            <input th:value="${rulerGroup}? ${rulerGroup.pluginCode}" id="pluginCode" name="pluginCode" required="" lay-verify="required" placeholder="请输入pluginCode" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="float: right">
+            <button class="layui-btn" lay-submit="" lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.use('form', function(){
+        var layer = parent.layer === undefined ? layui.layer : parent.layer,
+         form = layui.form(),
+        $ = layui.jquery;
+        form.on('submit(formDemo)', function(data){
+            $.ajax({
+                url:'/ruler/rulerGroup',
+                data:$("#add-ruler-div").serialize(),
+                type:'POST',
+                success:function (data) {
+                    if(data.status==200){
+                        layer.msg("操作成功！");
+                        layer.closeAll("iframe");
+                    }else{
+                        layer.msg("操作失败！")
+                    }
+                },
+                error:function () {
+                    layer.msg("操作失败！")
+                }
+            });
+
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

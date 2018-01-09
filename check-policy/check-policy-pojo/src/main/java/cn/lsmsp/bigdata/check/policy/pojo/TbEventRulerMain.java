@@ -15,6 +15,15 @@ public class TbEventRulerMain implements Serializable {
     private Date createdTime;
     private Date updatedTime;
     private Integer status;
+    private Integer priority;
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
     public Integer getStatus() {
         return status;

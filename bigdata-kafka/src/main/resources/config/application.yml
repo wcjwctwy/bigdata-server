@@ -1,0 +1,12 @@
+server:
+  address: 10.20.7.23
+  port: 8859
+logging:
+  level:
+    org:
+      springframework: info
+      apache: info
+    cn:
+      lsmsp:
+        bigdata:
+          kafka: info
