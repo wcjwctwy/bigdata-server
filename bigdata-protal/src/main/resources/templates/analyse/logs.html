@@ -56,7 +56,9 @@
         var time = year+month+day+'*';
         $("#logInfo").empty();
         $.ajax({
-            url: "/analyse/logs",
+            url: "http://10.20.7.23:33332/analyse/logs",
+            dataType : 'jsonp',
+            jsonp : "callback",
             data: {
                 entid: entid, cusid: cusid, cate: cate, subcate: subcate, level: level, device: device,
                 page: page, rows: rows,time:time

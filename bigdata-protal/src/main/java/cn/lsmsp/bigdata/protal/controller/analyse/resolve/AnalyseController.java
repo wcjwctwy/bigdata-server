@@ -27,9 +27,6 @@ public class AnalyseController {
     @Autowired
     private EventAnalyseService eventAnalyseService;
 
-    @Autowired
-    private SolrQueryService solrQueryService;
-
 
     @RequestMapping("/resolve")
     public String facet(Model model) {
@@ -47,24 +44,6 @@ public class AnalyseController {
     @RequestMapping(value = "logs",method = RequestMethod.GET)
     public String logs(){
         return "analyse/logs";
-    }
-
-    @RequestMapping(value = "logs",method = RequestMethod.POST)
-    @ResponseBody
-    public BigdataResult getLogs(String entid,String cusid,String cate,String subcate,String level,String device,int page,int rows,String time){
-        String query = "";
-        query+=StringUtils.isEmpty(entid)?"":",entid:"+entid;
-        query+=StringUtils.isEmpty(cusid)?"":",cusid:"+cusid;
-        query+=StringUtils.isEmpty(cate)?"":",eventcategory:"+cate;
-        query+=StringUtils.isEmpty(subcate)?"":",eventcategorytechnique:"+subcate;
-        query+=StringUtils.isEmpty(level)?"":",eventlevel:"+level;
-        query+=StringUtils.isEmpty(device)?"":",categorydevice:"+device;
-        query+=StringUtils.isEmpty(time)?"":",eventstarttime:"+time;
-        query=StringUtils.isEmpty(query)?"*:*":query.substring(1);
-        Page<LsEvent> queryResults = solrQueryService.getQueryResults(query, page, rows);
-        int totalPages = queryResults.getTotalPages();
-        List<LsEvent> content = queryResults.getContent();
-        return BigdataResult.build(200,totalPages+"",content);
     }
 
 

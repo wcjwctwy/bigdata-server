@@ -11,9 +11,11 @@
 
 function selectitem(){
     $.ajax({
-        url: "/analyse/stats",
+        dataType : 'jsonp',
+        url: "http://10.20.7.23:33332/analyse/stats",
+        jsonp : "callback",
         data: {
-            entId: entid, cusId: cusid, eventCategory: cate, eventCategoryTechnique: subcate, eventLevel: level, categoryDevice: device
+            entId: entid, assetId: cusid, eventCategory: cate, eventCategoryTechnique: subcate, eventLevel: level, categoryDevice: device
             ,year:year,month:month,day:day
         },
         type: "get",

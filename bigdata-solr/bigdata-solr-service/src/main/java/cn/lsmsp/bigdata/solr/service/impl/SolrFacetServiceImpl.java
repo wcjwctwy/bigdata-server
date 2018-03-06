@@ -1,8 +1,8 @@
 package cn.lsmsp.bigdata.solr.service.impl;
 
-import cn.lsmsp.bigdata.check.policy.dao.EventCountDao;
-import cn.lsmsp.bigdata.check.policy.dao.analyse.EventAnalyseDao;
-import cn.lsmsp.bigdata.check.policy.pojo.TbEventclassMin;
+//import cn.lsmsp.bigdata.check.policy.dao.EventCountDao;
+//import cn.lsmsp.bigdata.check.policy.dao.analyse.EventAnalyseDao;
+//import cn.lsmsp.bigdata.check.policy.pojo.TbEventclassMin;
 import cn.lsmsp.bigdata.dao.SolrFacetDao;
 import cn.lsmsp.bigdata.pojo.LsEvent;
 import cn.lsmsp.bigdata.solr.SolrFacetService;
@@ -24,8 +24,8 @@ public class SolrFacetServiceImpl implements SolrFacetService {
     @Autowired
     private SolrFacetDao solrFacetDao;
 
-    @Autowired
-    private EventCountDao eventCountDao;
+//    @Autowired
+//    private EventCountDao eventCountDao;
 
     @Override
     public FacetPage<LsEvent> getFacetByEntidAndCusid() {
@@ -61,8 +61,8 @@ public class SolrFacetServiceImpl implements SolrFacetService {
     }
 
 
-    @Autowired
-    private EventAnalyseDao eventAnalyseDao;
+//    @Autowired
+//    private EventAnalyseDao eventAnalyseDao;
     @Override
     public void save2Mysql(String year,String month,String day) {
         String time=year+month+day+"*";
@@ -84,7 +84,7 @@ public class SolrFacetServiceImpl implements SolrFacetService {
                     if(!StringUtils.isEmpty(year))tbEventAnalyse.setYear(Short.valueOf(year));
                     if(!StringUtils.isEmpty(month))tbEventAnalyse.setMonth(Short.valueOf(month));
                     if(!StringUtils.isEmpty(day))tbEventAnalyse.setDay(Short.valueOf(day));
-                    eventAnalyseDao.saveEvent(tbEventAnalyse);
+//                    eventAnalyseDao.saveEvent(tbEventAnalyse);
                 }))))));
     }
 
@@ -98,22 +98,22 @@ public class SolrFacetServiceImpl implements SolrFacetService {
         FacetPage<LsEvent> all = solrFacetDao.getAllFacet(query, -1, "entid", "cusid", "eventcategory","eventcategorytechnique","eventlevel","categorydevice","eventname","deviceaddress");
         all.getPivot("entid,cusid,eventcategory,eventcategorytechnique,eventlevel,categorydevice,eventname,deviceaddress")
                 .forEach(x -> x.getPivot().forEach(y->y.getPivot().forEach(z->z.getPivot().forEach(a->a.getPivot().forEach(b->b.getPivot().forEach(c->c.getPivot().forEach(d->d.getPivot().forEach(f->{
-                    TbEventclassMin eventCount = new TbEventclassMin();
-                    eventCount.setEntId(Long.valueOf(x.getValue()));
-                    eventCount.setAssetId(Long.valueOf(y.getValue()));
-                    eventCount.setEventCategory(z.getValue());
-                    eventCount.setEventCategoryTechnique(a.getValue());
-                    eventCount.setEventLevel(b.getValue());
-                    eventCount.setCategoryDevice(c.getValue());
-                    eventCount.setEventCount(f.getValueCount());
-                    eventCount.setEventName(d.getValue());
-                    eventCount.setDeviceAddress(f.getValue());
-                    if(!StringUtils.isEmpty(year))eventCount.setYear(year);
-                    if(!StringUtils.isEmpty(month))eventCount.setMonth(month);
-                    if(!StringUtils.isEmpty(day))eventCount.setDay(day);
-                    if(!StringUtils.isEmpty(hour))eventCount.setHour(hour);
-                    if(!StringUtils.isEmpty(min))eventCount.setMin(min);
-                    eventCountDao.save(eventCount);
+//                    TbEventclassMin eventCount = new TbEventclassMin();
+//                    eventCount.setEntId(Long.valueOf(x.getValue()));
+//                    eventCount.setAssetId(Long.valueOf(y.getValue()));
+//                    eventCount.setEventCategory(z.getValue());
+//                    eventCount.setEventCategoryTechnique(a.getValue());
+//                    eventCount.setEventLevel(b.getValue());
+//                    eventCount.setCategoryDevice(c.getValue());
+//                    eventCount.setEventCount(f.getValueCount());
+//                    eventCount.setEventName(d.getValue());
+//                    eventCount.setDeviceAddress(f.getValue());
+//                    if(!StringUtils.isEmpty(year))eventCount.setYear(year);
+//                    if(!StringUtils.isEmpty(month))eventCount.setMonth(month);
+//                    if(!StringUtils.isEmpty(day))eventCount.setDay(day);
+//                    if(!StringUtils.isEmpty(hour))eventCount.setHour(hour);
+//                    if(!StringUtils.isEmpty(min))eventCount.setMin(min);
+//                    eventCountDao.save(eventCount);
                 }))))))));
 
     }

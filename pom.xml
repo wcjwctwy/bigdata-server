@@ -13,6 +13,7 @@
         <module>user-auth</module>
         <module>bigdata-solr</module>
         <module>bigdata-kafka</module>
+        <module>bigdata-prod-analyse</module>
     </modules>
 	<packaging>pom</packaging>
 

@@ -19,11 +19,6 @@
         <artifactId>bigdata-solr-interface</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </dependency>
-    <dependency>
-        <groupId>cn.lsmsp.bigdata</groupId>
-        <artifactId>check-policy-dao</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </dependency>
 </dependencies>
 
 </project>

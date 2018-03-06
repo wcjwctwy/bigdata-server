@@ -1,6 +1,5 @@
 package cn.lsmsp.bigdata.solr.service.impl;
 
-import cn.lsmsp.bigdata.check.policy.dao.analyse.EventAnalyseDao;
 import cn.lsmsp.bigdata.pojo.LsEvent;
 import cn.lsmsp.bigdata.solr.EventAnalyseService;
 import cn.lsmsp.common.pojo.analyse.TbEventAnalyse;
@@ -16,8 +15,8 @@ import java.util.*;
 public class EventAnalyseServiceImpl implements EventAnalyseService {
 
 
-    @Autowired
-    private EventAnalyseDao eventAnalyseDao;
+//    @Autowired
+//    private EventAnalyseDao eventAnalyseDao;
 
     @Override
     public List<TbEventAnalyse> getStatResult(String fields) {
@@ -25,8 +24,8 @@ public class EventAnalyseServiceImpl implements EventAnalyseService {
         sqlCondition.setGroup(fields);
         sqlCondition.setTableName("tb_event_analyse");
         sqlCondition.setSum("sum(total) as total");
-        List<TbEventAnalyse> groupResults = eventAnalyseDao.getGroupResults(sqlCondition);
-        return groupResults;
+//        List<TbEventAnalyse> groupResults = eventAnalyseDao.getGroupResults(sqlCondition);
+        return null;
     }
 
     @Override
@@ -41,8 +40,8 @@ public class EventAnalyseServiceImpl implements EventAnalyseService {
             sqlCondition.setGroup(groupFields);
         }
         sqlCondition.setSum("sum(total) as total");
-        List<TbEventAnalyse> groupResults = eventAnalyseDao.getGroupResults(sqlCondition);
-        return groupResults;
+//        List<TbEventAnalyse> groupResults = eventAnalyseDao.getGroupResults(sqlCondition);
+        return null;
     }
 
     @Override
@@ -102,16 +101,16 @@ public class EventAnalyseServiceImpl implements EventAnalyseService {
     @Override
     public Map<Long, long[]> getTimeLineStatResultsByMonth(TbEventAnalyse eventAnalyse) {
         Map<Long, long[]> result = new HashMap<>();
-        List<TbEventAnalyse> timeLineEntidResultsGroupByDay = eventAnalyseDao.getTimeLineEntidResultsGroupByDay((int)eventAnalyse.getYear(), (int)eventAnalyse.getMonth());
-        timeLineEntidResultsGroupByDay.forEach(ea->{
-            Long entId = ea.getEntId();
-            Short day = ea.getDay();
-            if(!result.containsKey(entId)){
-                long[] longs = new long[31];
-                result.put(entId,longs);
-            }
-            result.get(entId)[day-1]=ea.getTotal();
-        });
+//        List<TbEventAnalyse> timeLineEntidResultsGroupByDay = eventAnalyseDao.getTimeLineEntidResultsGroupByDay((int)eventAnalyse.getYear(), (int)eventAnalyse.getMonth());
+//        timeLineEntidResultsGroupByDay.forEach(ea->{
+//            Long entId = ea.getEntId();
+//            Short day = ea.getDay();
+//            if(!result.containsKey(entId)){
+//                long[] longs = new long[31];
+//                result.put(entId,longs);
+//            }
+//            result.get(entId)[day-1]=ea.getTotal();
+//        });
 
         return result;
     }

@@ -5,7 +5,6 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:config/solr.properties")
-//@PropertySource("file:/home/bdstat/config/solr.properties")
 public class SolrConfig {
 
 }

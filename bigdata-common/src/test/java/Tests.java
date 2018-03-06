@@ -1,22 +1,23 @@
+import cn.lsmsp.common.pojo.analyse.TbEventAnalyse;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanUtilsBean;
+
+import java.beans.PropertyDescriptor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Slf4j
 public class Tests {
-    public static void main(String[] args) {
-        String s = "aa.20.7.23/50070jddjhh";
-//        String s = "10.20.7.23/8088";
-        String pattern = "((((\\d{1,3}|\\w{2})\\.\\d{1,3})\\.\\d{1,3})\\.\\d{1,3}(/?)(\\w*?)j)";
-//        String pattern = "((\\d{1,3}\\.\\d{1,3})\\.\\d{1,3})\\.\\d{1,3}\\/(\\d*?)";
-        Pattern pattern1 =Pattern.compile(pattern);
-        Matcher matcher = pattern1.matcher(s);
-//        System.out.println(matcher.matches());
+    public static void main(String[] args) throws Exception{
+        TbEventAnalyse tbEventAnalyse = new TbEventAnalyse();
+        tbEventAnalyse.setYear(Short.valueOf("5"));
+        tbEventAnalyse.setEventLevel("info");
+        PropertyDescriptor[] propertyDescriptors = BeanUtilsBean.getInstance().getPropertyUtils().getPropertyDescriptors(tbEventAnalyse);
+        for (PropertyDescriptor descriptor : propertyDescriptors) {
+            Class<?> propertyType = descriptor.getPropertyType();
+            String name = descriptor.getName();
+            Object invoke = descriptor.getReadMethod().invoke(tbEventAnalyse);
+            log.info("propertyType:{},name:{},invoker:{}",propertyType,name,invoke);
 
-       if(matcher.find())
-       {
-           System.out.println(matcher.groupCount());
-            for (int i = 1;i<=matcher.groupCount();i++) {
-                System.out.println("value: " + matcher.group(i) + " i: " + i);
-            }
         }
     }
 }
