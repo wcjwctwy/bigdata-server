@@ -1,4 +1,4 @@
 server:
-  port: 81
+  port: 33332
   context-path: /
   address: 10.20.7.23

@@ -15,7 +15,7 @@
 <dependencies>
     <dependency>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
         <groupId>cn.lsmsp.bigdata</groupId>
@@ -30,11 +30,6 @@
     <dependency>
         <groupId>net.sourceforge.nekohtml</groupId>
         <artifactId>nekohtml</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>cn.lsmsp.bigdata</groupId>
-        <artifactId>bigdata-solr-service</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
         <groupId>cn.lsmsp.bigdata</groupId>

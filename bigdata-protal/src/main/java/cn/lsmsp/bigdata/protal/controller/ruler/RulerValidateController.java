@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
@@ -36,10 +37,11 @@ public class RulerValidateController {
     private EventRulerTransService eventRulerTransService;
 
     @RequestMapping("/ruler/validate")
-    public String page(Model model){
+    @ResponseBody
+    public BigdataResult page(String callback){
         Map<String, Map<Integer,String>> rulerClasses = rulerService.getRulerClass();
-        model.addAttribute("rulerClasses",rulerClasses);
-        return "ruler/validate";
+
+        return BigdataResult.ok(rulerClasses);
     }
 
     @RequestMapping("/ruler/content")
@@ -50,12 +52,13 @@ public class RulerValidateController {
         Integer pluginId = ruler.getPluginCode();
         String translations = JsonUtils.objectToJson(eventRulerTransService.getEventRulerTrans(pluginId));
         return BigdataResult.build(200,translations,ruler);
-//        return BigdataResult.build(200,ruler.getCondition(),ruler.getContent());
     }
 
     @RequestMapping(value="/ruler/regex",method = RequestMethod.POST)
     @ResponseBody
-    public BigdataResult saveRegex(Integer rulerId,String condition){
+    public BigdataResult saveRegex(@RequestParam("rulerId") Integer rulerId,
+                            @RequestParam("condition") String condition,
+                            String callback){
         TbEventRulerMain tbEventRulerMain = new TbEventRulerMain();
         tbEventRulerMain.setId(rulerId);
         tbEventRulerMain.setRegex(condition);
@@ -70,7 +73,7 @@ public class RulerValidateController {
 
     @RequestMapping(value="/ruler/content",method = RequestMethod.POST)
     @ResponseBody
-    public BigdataResult saveContent(Integer rulerId,String rulerContent){
+    public BigdataResult saveContent(Integer rulerId,String rulerContent,String callback){
         TbEventRulerMain tbEventRulerMain = new TbEventRulerMain();
         tbEventRulerMain.setId(rulerId);
         tbEventRulerMain.setRulerContent(rulerContent);
@@ -87,9 +90,9 @@ public class RulerValidateController {
      * 更新trans
      * @return
      */
-    @RequestMapping(value="/ruler/translation",method = RequestMethod.PUT)
+    @RequestMapping(value="/ruler/translation/update",method = RequestMethod.PUT)
     @ResponseBody
-    public BigdataResult updateTranslation(String translation,Integer rulerId){
+    public BigdataResult updateTranslation(String translation,Integer rulerId,String callback){
         List<TranslationRuler> translationRuler = JsonUtils.jsonToList(translation, TranslationRuler.class);
         LOGGER.debug("TranslationRuler: "+translationRuler);
         try {

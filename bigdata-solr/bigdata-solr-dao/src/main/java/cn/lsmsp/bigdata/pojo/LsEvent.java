@@ -56,6 +56,16 @@ public class LsEvent {
     private String eventCategory;
     @Field("rawevent")
     private String rawevent;
+    @Field("tarport")
+    private String tarPort;
+
+    public String getTarPort() {
+        return tarPort;
+    }
+
+    public void setTarPort(String tarPort) {
+        this.tarPort = tarPort;
+    }
 
     public String getRawevent() {
         return rawevent;

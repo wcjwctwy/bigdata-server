@@ -48,6 +48,9 @@ public class EventAnalyseServiceImpl implements EventAnalyseService {
     public List<Map<String, Long>> getStatResults(TbEventAnalyse eventAnalyse) {
         List<Map<String, Long>> result = new ArrayList<>();
         List<TbEventAnalyse> statResults = getStatResult(eventAnalyse, "");
+        if(statResults==null){
+            return result;
+        }
         TbEventAnalyse statResult = statResults.get(0);
         if(statResult==null){
             return result;

@@ -1,5 +1,6 @@
 package cn.lsmsp.bigdata.service;
 
+import cn.lsmsp.bigdata.dto.ResolutionDTO;
 import cn.lsmsp.bigdata.entity.EventAnalyse;
 
 import java.util.Date;
@@ -22,6 +23,7 @@ public interface EventclassService {
     List<EventAnalyse> getStatResult(String groupFields) throws Exception;
     List<EventAnalyse> getStatResult(EventAnalyse eventAnalyse,String groupFields)throws Exception;
     List<Map<String , Long>> getStatResults(EventAnalyse eventAnalyse)  throws Exception;
-    List<Map<String , Long>> getStatResults(EventAnalyse eventAnalyse, Date date);
+    List<ResolutionDTO> getResolution(EventAnalyse eventAnalyse, String groupFields);
+    Map<String , Long> getStatResults(EventAnalyse eventAnalyse, String groupField)throws Exception;
     Map<Long , long[]> getTimeLineStatResultsByMonth(EventAnalyse eventAnalyse);
 }

@@ -7,6 +7,8 @@ import cn.lsmsp.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,15 +31,29 @@ public class AnalyseController {
 
     @RequestMapping(value = "/stats",method = RequestMethod.GET)
     @ResponseBody
-    public String stats(EventAnalyse eventAnalyse,String callback){
+    public BigdataResult stats(EventAnalyse eventAnalyse){
         try {
             List<Map<String, Long>> statResults = eventclassService.getStatResults(eventAnalyse);
-            return callback+"("+ JsonUtils.objectToJson(BigdataResult.ok(statResults))+")";
+            return BigdataResult.ok(statResults);
         }catch (Exception e){
             log.error("【AnalyseController】stats 统计出错了！！ ");
             e.printStackTrace();
         }
-        return callback+"("+JsonUtils.objectToJson(BigdataResult.build(601,"统计出错了！！"))+")";
+        return BigdataResult.build(601,"统计出错了！！");
+
+    }
+
+    @RequestMapping(value = "/stats/{field}",method = RequestMethod.GET)
+    @ResponseBody
+    public BigdataResult stats(EventAnalyse eventAnalyse,@PathVariable("field") String field){
+        try {
+            Map<String, Long> statResults = eventclassService.getStatResults(eventAnalyse,field);
+            return BigdataResult.ok(statResults);
+        }catch (Exception e){
+            log.error("【AnalyseController】stats 统计出错了！！ ");
+            e.printStackTrace();
+        }
+        return BigdataResult.build(601,"统计出错了！！");
 
     }
 

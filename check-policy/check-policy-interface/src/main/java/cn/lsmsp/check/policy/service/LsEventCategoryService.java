@@ -14,4 +14,6 @@ public interface LsEventCategoryService {
 
     List<EventCategoryHtml> getEventCategoryHtmls();
 
+    EventCategoryHtml saveEventCategoryHtml(EventCategoryHtml eventCategoryHtml);
+
 }

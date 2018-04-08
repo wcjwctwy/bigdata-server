@@ -19,8 +19,8 @@ public interface RulerGroupDao {
     void addGroup(TbRulerGroup tbRulerGroup);
 
     @UpdateProvider(type= SqlProvider.class,method = "update2")
-    List<TbRulerGroup> updataGroup(SqlCondition sqlCondition);
+    void updataGroup(SqlCondition sqlCondition);
 
-    @DeleteProvider(type= SqlProvider.class,method = "delete")
-    List<TbRulerGroup> delGroup(TbRulerGroup tbRulerGroup);
+    @Delete("delete from tb_ruler_group where id=#{tbRulerGroup.id}")
+    void delGroup(@Param("tbRulerGroup") TbRulerGroup tbRulerGroup);
 }

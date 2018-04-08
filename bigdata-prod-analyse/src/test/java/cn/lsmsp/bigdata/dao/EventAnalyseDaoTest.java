@@ -1,6 +1,8 @@
 package cn.lsmsp.bigdata.dao;
 
+import cn.lsmsp.bigdata.dto.ResolutionDTO;
 import cn.lsmsp.bigdata.entity.EventAnalyse;
+import cn.lsmsp.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,6 +43,23 @@ public class EventAnalyseDaoTest {
         eventAnalyse.setEntId(1L);
         EventAnalyse one = eventAnalyseDao.findOne(eventAnalyse);
         Assert.assertNotNull(one);
+    }
+
+    @Test
+    public void getResolution(){
+        EventAnalyse eventAnalyse = new EventAnalyse();
+        eventAnalyse.setDay(5);
+        List<ResolutionDTO> entId = eventAnalyseDao.getResolution(eventAnalyse, "assetId");
+        Assert.assertNotNull(entId);
+        log.info("【EventAnalyseDaoTest】 getResolution:{}", JsonUtils.objectToJson(entId));
+    }
+
+    @Test
+    public void getSum(){
+        EventAnalyse eventAnalyse = new EventAnalyse();
+        List<EventAnalyse> sum = eventAnalyseDao.getSum(eventAnalyse, "entId");
+        Assert.assertNotNull(sum);
+        log.info("【查询总量】sum：{}",JsonUtils.objectToJson(sum));
     }
 
 }

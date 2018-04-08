@@ -3,6 +3,7 @@ package cn.lsmsp.bigdata.protal.controller.ruler;
 import cn.lsmsp.bigdata.check.policy.pojo.TbEventRulerMain;
 import cn.lsmsp.check.policy.service.RulerService;
 import cn.lsmsp.common.pojo.BigdataResult;
+import cn.lsmsp.common.utils.JsonUtils;
 import cn.lsmsp.common.utils.UpDownLoadUtils;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
@@ -56,8 +57,4 @@ public class RulerListController {
         return BigdataResult.ok("下载完成!");
     }
 
-    @RequestMapping("/ruler/rulersList")
-    public String page(){
-        return "ruler/rulersList";
-    }
 }

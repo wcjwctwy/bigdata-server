@@ -1,12 +1,16 @@
 package cn.lsmsp.bigdata.service.impl;
 
 import cn.lsmsp.bigdata.dao.EventAnalyseDao;
+import cn.lsmsp.bigdata.dto.ResolutionDTO;
 import cn.lsmsp.bigdata.entity.EventAnalyse;
 import cn.lsmsp.bigdata.service.EventclassService;
 import cn.lsmsp.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -24,7 +28,7 @@ public class EventclassServiceImpl implements EventclassService {
     @Override
     public List<EventAnalyse> getStatResult(String groupFields) throws Exception{
 
-        return getStatResult(null,groupFields);
+        return getStatResult(new EventAnalyse(),groupFields);
     }
 
     @Override
@@ -38,7 +42,12 @@ public class EventclassServiceImpl implements EventclassService {
         List<Map<String, Long>> result = new ArrayList<>();
 
         Map<String, Long> total = new HashMap<>();
-        total.put("total", eventAnalyseDao.getSum(eventAnalyse));
+        List<EventAnalyse> analyseDaoSum = eventAnalyseDao.getSum(eventAnalyse, "");
+        if(ObjectUtils.isEmpty(analyseDaoSum)){
+            //TODO 异常抛出 方便排查
+            return null;
+        }
+        total.put("total", analyseDaoSum.get(0).getEventCount());
         result.add(total);
 
         List<EventAnalyse> allEnts = getStatResult(eventAnalyse, entid);
@@ -74,8 +83,27 @@ public class EventclassServiceImpl implements EventclassService {
     }
 
     @Override
-    public List<Map<String, Long>> getStatResults(EventAnalyse eventAnalyse, Date date) {
-        return null;
+    public List<ResolutionDTO> getResolution(EventAnalyse eventAnalyse, String groupFields) {
+
+        List<ResolutionDTO> resolution = eventAnalyseDao.getResolution(eventAnalyse, groupFields);
+
+        return resolution;
+    }
+
+    @Override
+    public Map<String, Long> getStatResults(EventAnalyse eventAnalyse, String groupField) throws Exception{
+        List<EventAnalyse> allresults = eventAnalyseDao.getGroupResults(eventAnalyse,groupField);
+        Map<String, Long> results = new HashMap<>();
+        Method method = EventAnalyse.class.getMethod("get"+groupField.substring(0,1).toUpperCase()+groupField.substring(1));
+        allresults.forEach(e -> {
+            try {
+                results.put(method.invoke(e).toString(), e.getEventCount());
+            }catch (Exception e1){
+                e1.printStackTrace();
+            }
+        });
+
+        return results;
     }
 
     @Override

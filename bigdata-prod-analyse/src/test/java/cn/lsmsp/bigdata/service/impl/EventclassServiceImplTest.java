@@ -43,7 +43,7 @@ public class EventclassServiceImplTest {
     @Test
     public void getStatResults() throws Exception {
         EventAnalyse eventAnalyse = new EventAnalyse();
-        List<Map<String, Long>> statResults = eventclassService.getStatResults(null);
+        List<Map<String, Long>> statResults = eventclassService.getStatResults(new EventAnalyse());
         Assert.assertNotNull(statResults);
         log.info("【EventclassService】getStatResults : {}", JsonUtils.objectToJson(statResults));
     }

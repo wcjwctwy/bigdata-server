@@ -1,5 +1,6 @@
 package cn.lsmsp.common.utils;
 
+import cn.lsmsp.common.pojo.BigdataResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,6 +56,17 @@ public class JsonUtils {
 			e.printStackTrace();
 		}
     	return null;
+    }
+
+    /**
+     * 将对象转换成ajax 跨域请求的json字符串。
+     * <p>Title: pojoToJson</p>
+     * <p>Description: </p>
+     * @param data
+     * @return
+     */
+    public static String objectToAjaxJson(Object data,String callback) {
+        return callback+"("+JsonUtils.objectToJson(data)+")";
     }
     
     /**

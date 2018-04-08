@@ -105,12 +105,6 @@ public class RulerController {
         return BigdataResult.ok();
     }
 
-    @RequestMapping("/page/ruler/ruler-add")
-    public String addPage(Model model) {
-        List<TbRulerGroup> allGroups = rulerGroupService.getAllGroups();
-        model.addAttribute("allGroups",allGroups);
-        return "ruler/ruler-add";
-    }
 
     @RequestMapping(value = "/ruler",method = RequestMethod.POST)
     @ResponseBody
@@ -134,18 +128,22 @@ public class RulerController {
         return BigdataResult.ok();
     }
 
+
+    /**
+     * 获取rule信息
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/ruler/{id}",method = RequestMethod.GET)
-    public RedirectView getRuler(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public BigdataResult getRuler(@PathVariable("id") Integer id) {
         if(id==null){
-            throw new RuntimeException("删除id不可为空！");
+            throw new RuntimeException("id不可为空！");
         }
-        RedirectView redirectView = new RedirectView("/page/ruler/ruler-add",true,false,false);
         TbEventRulerMain ruler = rulerService.getRuler(id);
         String rulerContent = ruler.getRulerContent();
         String prettyJson = JsonUtils.prettyJson(rulerContent);
-        ruler.setRulerContent(prettyJson);
-        redirectAttributes.addFlashAttribute("ruler",ruler);
-        return redirectView;
+        return BigdataResult.ok(prettyJson);
     }
 
 

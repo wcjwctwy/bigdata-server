@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);"
+                                                              class="input_my_zzk">&nbsp;<input onclick="zzk_go()"
+                                                                                                type="button"
+                                                                                                value="找找看" id="btnZzk"
+                                                                                                class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q"
+                                                                 onkeydown="return google_go_enter(event)"
+                                                                 class="input_my_zzk">&nbsp;<input onclick="google_go()"
+                                                                                                   type="button"
+                                                                                                   value="谷歌搜索"
+                                                                                                   class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://www.cnblogs.com/irich/">irich的架构师之路</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="http://www.cnblogs.com/">博客园</a></li>
+                <li><a href="http://www.cnblogs.com/irich/">首页</a></li>
+                <!--<li><a href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>-->
+                <li><a href="https://msg.cnblogs.com/send/irich">联系</a></li>
+                <li><a href="http://www.cnblogs.com/irich/rss">订阅</a>
+                    <!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/irich/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>-->
+                </li>
+                <li><a href="https://i.cnblogs.com/">管理</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="often_link">
+                        常用链接 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" id="q" placeholder="irich" onkeydown="return zzk_go_enter(event);"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <input onclick="zzk_go()"
+                           type="button"
+                           value="找找看" id="btnZzk"
+                           class=" form-control">
+                </div>
+            </form>
+        </div>
+        <div style="float:right;">
+            <ul class="nav navbar-nav">
+                <li><a target="_blank"
+                       href="//shang.qq.com/wpa/qunwpa?idkey=3f24ba6d7375e9a36787d6fc0a0b7e115e2f69440a2d481029df5393a127f9eb"
+                       style="color:red;">全栈工程师③群：256909960<img border="0" src="//pub.idqqimg.com/wpa/images/group.png"
+                                                                alt="全栈工程师③群" title="全栈工程师③群"></a></li>
+                <li><a id="stats_post_count">随笔 - 9&nbsp; </a></li>
+                <li><a id="stats_article_count">文章 - 0&nbsp; </a></li>
+                <li><a id="stats-comment_count">评论 - 0</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</nav>
+</body>
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="js/cnblog.js"/>
+</html>

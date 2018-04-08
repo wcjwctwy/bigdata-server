@@ -5,6 +5,7 @@ import cn.lsmsp.check.policy.service.LsEventCategoryService;
 import cn.lsmsp.check.policy.service.LsEventSubcategoryService;
 import cn.lsmsp.common.pojo.BigdataResult;
 import cn.lsmsp.common.pojo.EventCategoryHtml;
+import cn.lsmsp.common.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,15 @@ public class ClassifyController {
     @Autowired
     private LsEventSubcategoryService lsEventSubcategoryService;
 
-    @RequestMapping("ruler/classify")
-    public String page(Model model){
+    @RequestMapping("/ruler/classify")
+    @ResponseBody
+    public BigdataResult page(){
         List<EventCategoryHtml> eventCategories = lsEventCategoryService.getEventCategoryHtmls();
-        LOGGER.debug(eventCategories.toString());
-        model.addAttribute("eventCategories",eventCategories);
-        return "ruler/classify";
+        LOGGER.info("【分类查询】大类信息：{}",eventCategories.toString());
+
+        return BigdataResult.ok(eventCategories);
     }
+
 
 
     @RequestMapping(value = "/ruler/classify/subcount",method = RequestMethod.GET)

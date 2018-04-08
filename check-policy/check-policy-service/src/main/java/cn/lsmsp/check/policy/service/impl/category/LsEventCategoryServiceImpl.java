@@ -37,6 +37,12 @@ public class LsEventCategoryServiceImpl implements LsEventCategoryService {
     }
 
     @Override
+    public EventCategoryHtml saveEventCategoryHtml(EventCategoryHtml eventCategoryHtml) {
+
+        return null;
+    }
+
+    @Override
     public List<EventCategoryHtml> getEventCategoryHtmls() {
         List<LsEventCategory> eventCategories = lsEventCategoryDao.getEventCategories();
         List<EventCategoryHtml> result = new ArrayList<>();

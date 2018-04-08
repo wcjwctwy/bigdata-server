@@ -1,5 +1,5 @@
 server:
-  port: 33332
+  port: 33333
 # datasource
 spring:
   datasource:
@@ -14,3 +14,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
+hbase:
+  clientPort: 2181
+  quorum: 10.20.20.1,10.20.20.2,10.20.20.3
+  master: 10.20.20.1:60000
